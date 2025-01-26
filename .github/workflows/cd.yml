@@ -1,0 +1,64 @@
+name: CD
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    name: 🚀 Deploy Application
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+      AWS_REGION: "us-east-1"  # ✅ Update this to your AWS region
+      AWS_ECR_REPO: "${{ secrets.AWS_ECR_URL }}/vite-react-app-with-supabase-aws"
+      ECS_CLUSTER: "my-cluster"
+      ECS_SERVICE: "my-service"
+
+    steps:
+      # 📥 1. Checkout Repository
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      # 🏗 2. Set Up Node.js
+      - name: 🏗 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "npm"
+
+      # 📦 3. Install Dependencies
+      - name: 📦 Install Dependencies
+        run: npm ci  # ✅ Faster & ensures a clean dependency tree
+
+      # 🔧 4. Build the App
+      - name: 🔧 Build Application
+        run: npm run build
+
+      # 🔑 5. Authenticate with AWS ECR
+      - name: 🔑 Login to Amazon ECR
+        run: |
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_URL }}
+
+      # 🐳 6. Build & Tag Docker Image
+      - name: 🐳 Build & Tag Docker Image
+        run: |
+          docker build --cache-from=type=registry,ref=$AWS_ECR_REPO:latest -t vite-react-app-with-supabase-aws .
+          docker tag vite-react-app-with-supabase-aws $AWS_ECR_REPO:latest
+
+      # 🚀 7. Push Docker Image to AWS ECR
+      - name: 🚀 Push Docker Image to ECR
+        run: docker push $AWS_ECR_REPO:latest
+
+      # 🚢 8. Deploy to AWS ECS
+      - name: 🚢 Deploy to AWS ECS
+        run: aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --force-new-deployment
+
+      # 🔍 9. Verify Deployment
+      - name: 🔍 Verify ECS Service
+        run: aws ecs describe-services --cluster $ECS_CLUSTER --services $ECS_SERVICE
