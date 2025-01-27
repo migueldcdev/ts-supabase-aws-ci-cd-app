@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { Button } from "../../components/Button"
-import { Input } from "../../components/Input";
 import { supabase } from "../../supabase";
 
 interface Product {
@@ -60,12 +58,12 @@ export const ProductList = () => {
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-3xl font-bold mb-6 text-center">Product List</h2>
       <div className="flex space-x-4 mb-6">
-        <Input type="text" placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full" />
-        <Input type="number" placeholder="Price" value={price.toString()} onChange={(e) => setPrice(Number(e.target.value))} className="w-full" />
+        <input type="text" placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full" />
+        <input type="number" placeholder="Price" value={price.toString()} onChange={(e) => setPrice(Number(e.target.value))} className="w-full" />
         {editingProduct ? (
-          <Button onClick={updateProduct} className="bg-yellow-500 hover:bg-yellow-600">Update</Button>
+          <button onClick={updateProduct} className="bg-yellow-500 hover:bg-yellow-600">Update</button>
         ) : (
-          <Button onClick={addProduct} className="bg-green-500 hover:bg-green-600">Add</Button>
+          <button onClick={addProduct} className="bg-green-500 hover:bg-green-600">Add</button>
         )}
       </div>
       <table className="table-auto w-full border border-gray-300 shadow-md rounded-md">
@@ -82,8 +80,8 @@ export const ProductList = () => {
               <td className="px-4 py-3">{product.name}</td>
               <td className="px-4 py-3">${product.price}</td>
               <td className="px-4 py-3 flex space-x-2 justify-center">
-                <Button onClick={() => { setEditingProduct(product); setName(product.name); setPrice(product.price); }} className="bg-yellow-500 hover:bg-yellow-600">Edit</Button>
-                <Button onClick={() => deleteProduct(product.id)} className="bg-red-500 hover:bg-red-600">Delete</Button>
+                <button onClick={() => { setEditingProduct(product); setName(product.name); setPrice(product.price); }} className="bg-yellow-500 hover:bg-yellow-600">Edit</button>
+                <button onClick={() => deleteProduct(product.id)} className="bg-red-500 hover:bg-red-600">Delete</button>
               </td>
             </tr>
           ))}

@@ -1,7 +1,5 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-
-import { Button } from "./components/Button";
 import { Login } from "./pages/Login";
 import { ProductList } from "./pages/ProductList";
 
@@ -19,7 +17,7 @@ const App = () => {
       <Router>
         <nav className="w-full bg-blue-800 text-white p-4 flex justify-between items-center shadow-md">
           <h1 className="text-xl font-bold">My Products App</h1>
-          {session && <Button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md">Logout</Button>}
+          {session && <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md">Logout</button>}
         </nav>
         <div className="flex flex-col items-center justify-center w-full h-full">
           <Routes>

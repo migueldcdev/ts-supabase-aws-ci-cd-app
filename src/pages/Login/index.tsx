@@ -1,30 +1,35 @@
-import { Button } from "../../components/Button"
-import { Input } from "../../components/Input";
-import { supabase } from "../../supabase"
-import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form"
+import { useAppContext } from "../../context"
+
+type Inputs = {
+  email: string;
+  password: string;
+}
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  
+  const { handleLogin } = useAppContext(); 
 
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setError(error.message);
-  };
+  const {
+    register,
+    handleSubmit,    
+    formState: { errors }
+  } = useForm<Inputs>()
+  const onSubmit: SubmitHandler<Inputs> = data => handleLogin(data)
 
   return (
     <div className="flex justify-center items-center mt-36">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-        <div className="flex flex-col space-y-4">
-          <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-3 border rounded-md" />
-          <Input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full p-3 border rounded-md" />
-          <Button onClick={handleLogin} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md">
+        <h2 className="text-3xl font-bold mb-6 text-center">Login</h2>        
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-4">
+          <input type="email" placeholder="Email" {...register("email")} className="w-full p-3 border rounded-md" />
+          {errors.email && <p>Email required</p>}
+          <input type="password" placeholder="Password" {...register("password")} className="w-full p-3 border rounded-md" />
+          {errors.password && <p>Password required</p>}
+          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-md">
             Login
-          </Button>
-        </div>
+          </button>
+        </form>
       </div>
     </div>
   );

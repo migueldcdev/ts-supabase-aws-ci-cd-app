@@ -2,9 +2,15 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "../supabase";
 import { Session } from "@supabase/supabase-js";
 
+
+type Data = {
+  email: string, password: string
+}
+
 type Context = {
     session: Session | null | undefined;
-    handleLogout: () => void
+    handleLogout: () => void;
+    handleLogin: (data: Data) => void;
 }
 
 export const appContext = createContext<Context | null>(null)
@@ -33,8 +39,14 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
         await supabase.auth.signOut();
         setSession(null);
       };
+
+      const handleLogin = async (data: Data) => {
+        // todo: handle errors
+        await supabase.auth.signInWithPassword(data);
+      } 
+
     return (
-        <appContext.Provider value={{session, handleLogout}}>
+        <appContext.Provider value={{session, handleLogout, handleLogin}}>
             {children}
         </appContext.Provider>
     )
