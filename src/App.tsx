@@ -1,7 +1,7 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-import { Login } from "./pages/Login";
-import { ProductList } from "./pages/ProductList";
+import { Login } from "./components/Login";
+import { ProductList } from "./components/ProductList";
 
 
 import { useAppContext } from "./context";
