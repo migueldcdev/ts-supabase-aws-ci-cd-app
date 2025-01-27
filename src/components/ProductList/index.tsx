@@ -1,71 +1,37 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-import { supabase } from "../../supabase";
+import { useAppContext } from "../../context"
 
-interface Product {
-  id: number;
+type Inputs = {
+  id?: number;
   name: string;
   price: number;
 }
 
 export const ProductList = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const { products, addProduct, updateProduct, deleteProduct } = useAppContext()
+  
+  const [editingProduct, setEditingProduct] = useState(false);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+  const {
+    register,
+    handleSubmit,    
+    formState: { errors },
+  } = useForm<Inputs>()
+  const onSubmit: SubmitHandler<Inputs> =  editingProduct ? (data) => updateProduct(data) : (data) => addProduct(data)
 
-  const fetchProducts = async () => {
-    const { data } = await supabase.from("products").select("*");
-    setProducts(data || []);
-  };
-
-  const addProduct = async () => {
-    const { data, error } = await supabase.from("products").insert([{ name, price }]).select();
-    if (error) {
-      console.error(error);
-      alert("Error adding product: " + error.message);
-    } else if (data) {
-      setProducts((prev) => [...prev, ...data]);
-      setName("");
-      setPrice(0);
-    }
-  };
-
-  const updateProduct = async () => {
-    if (!editingProduct) return;
-    const { error } = await supabase.from("products").update({ name, price }).eq("id", editingProduct.id);
-    if (error) {
-      console.error(error);
-      alert("Error updating product: " + error.message);
-    } else {
-      setProducts(products.map((product) => (product.id === editingProduct.id ? { ...product, name, price } : product)));
-      setEditingProduct(null);
-      setName("");
-      setPrice(0);
-    }
-  };
-
-  const deleteProduct = async (id: number) => {
-    await supabase.from("products").delete().eq("id", id);
-    setProducts(products.filter((product) => product.id !== id));
-  };
-
+  
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
       <h2 className="text-3xl font-bold mb-6 text-center">Product List</h2>
-      <div className="flex space-x-4 mb-6">
-        <input type="text" placeholder="Product Name" value={name} onChange={(e) => setName(e.target.value)} className="w-full" />
-        <input type="number" placeholder="Price" value={price.toString()} onChange={(e) => setPrice(Number(e.target.value))} className="w-full" />
-        {editingProduct ? (
-          <button onClick={updateProduct} className="bg-yellow-500 hover:bg-yellow-600">Update</button>
-        ) : (
-          <button onClick={addProduct} className="bg-green-500 hover:bg-green-600">Add</button>
-        )}
-      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex space-x-4 mb-6">
+        <input type="text" placeholder="Product Name" {...register("name")} className="w-full" />
+        {errors.name && <p>Name is required</p>}
+        <input type="number" placeholder="Price" {...register("price")} className="w-full" />
+        {errors.price && <p>Price is required</p>}
+        <button type="submit">{!editingProduct ? "Add" : "Update"}</button>
+      </form>
       <table className="table-auto w-full border border-gray-300 shadow-md rounded-md">
         <thead>
           <tr className="bg-gray-200 text-gray-700">
@@ -75,12 +41,12 @@ export const ProductList = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {products?.map((product) => (
             <tr key={product.id} className="border-b hover:bg-gray-100 transition">
               <td className="px-4 py-3">{product.name}</td>
               <td className="px-4 py-3">${product.price}</td>
               <td className="px-4 py-3 flex space-x-2 justify-center">
-                <button onClick={() => { setEditingProduct(product); setName(product.name); setPrice(product.price); }} className="bg-yellow-500 hover:bg-yellow-600">Edit</button>
+                <button onClick={() => setEditingProduct(!editingProduct) } className="bg-yellow-500 hover:bg-yellow-600">Edit</button>
                 <button onClick={() => deleteProduct(product.id)} className="bg-red-500 hover:bg-red-600">Delete</button>
               </td>
             </tr>
