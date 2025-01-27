@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-import Button from "../components/Button";
-import Input from "../components/Input";
-import { supabase } from "../supabase";
+import { Button } from "../../components/Button"
+import { Input } from "../../components/Input";
+import { supabase } from "../../supabase";
 
 interface Product {
   id: number;
@@ -10,7 +10,7 @@ interface Product {
   price: number;
 }
 
-const ProductList = () => {
+export const ProductList = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
@@ -93,4 +93,3 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;

@@ -1,9 +1,9 @@
-import Button from "../components/Button";
-import Input from "../components/Input";
-import { supabase } from "../supabase";
+import { Button } from "../../components/Button"
+import { Input } from "../../components/Input";
+import { supabase } from "../../supabase"
 import { useState } from "react";
 
-const Login = () => {
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,4 +30,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+

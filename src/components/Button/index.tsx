@@ -6,7 +6,7 @@ type ButtonProps = {
   className?: string;
 };
 
-const Button: React.FC<ButtonProps> = ({ children, onClick, className }) => {
+export const Button: React.FC<ButtonProps> = ({ children, onClick, className }) => {
   return (
     <button
       onClick={onClick}
@@ -17,4 +17,3 @@ const Button: React.FC<ButtonProps> = ({ children, onClick, className }) => {
   );
 };
 
-export default Button;

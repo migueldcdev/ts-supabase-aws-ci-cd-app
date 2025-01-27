@@ -8,7 +8,7 @@ type InputProps = {
   className?: string;
 };
 
-const Input: React.FC<InputProps> = ({ type, placeholder, value, onChange, className }) => {
+export const Input: React.FC<InputProps> = ({ type, placeholder, value, onChange, className }) => {
   return (
     <input
       type={type}
@@ -20,4 +20,3 @@ const Input: React.FC<InputProps> = ({ type, placeholder, value, onChange, class
   );
 };
 
-export default Input;

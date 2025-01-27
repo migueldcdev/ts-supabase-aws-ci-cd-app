@@ -1,9 +1,9 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import Button from "./components/Button";
-import Login from "./pages/Login";
-import ProductList from "./pages/ProductList";
+import { Button } from "./components/Button";
+import { Login } from "./pages/Login";
+import { ProductList } from "./pages/ProductList";
 import { Session } from "@supabase/supabase-js";
 import { supabase } from "./supabase";
 
