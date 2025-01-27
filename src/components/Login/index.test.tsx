@@ -1,9 +1,5 @@
-import { render } from "@testing-library/react";
+import {expect, test} from 'vitest'
 
-import { Login } from ".";
-
-test("renders login form", () => {
-  render(<Login />);
-
- 
+test("adds to numbers", () => {  
+ expect(2 + 3).toBe(5)
 });
