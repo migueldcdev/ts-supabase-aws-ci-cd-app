@@ -8,7 +8,7 @@ type Inputs = {
 
 type AddProductFormProps = {
   addProduct: (data: Inputs) => void;
-}
+};
 
 export const AddProductForm = ({ addProduct }: AddProductFormProps) => {
   const {
