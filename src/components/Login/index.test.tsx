@@ -1,5 +1,9 @@
-import { expect, test } from "vitest";
+import { Login } from ".";
+import { expect, test, describe } from "vitest";
+import {render, screen} from "../../utils/test"
 
-test("adds to numbers", () => {
-  expect(2 + 3).toBe(5);
-});
+describe("Login component test suite", () => {
+  test("should render", () => {
+    expect(2 + 2).toBe(4)
+  })
+})

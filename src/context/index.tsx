@@ -13,7 +13,7 @@ type Product = {
   price: number;
 };
 
-type Context = {
+export type Context = {
   session: Session | null | undefined;
   products: Product[] | undefined;
   handleLogout: () => void;
