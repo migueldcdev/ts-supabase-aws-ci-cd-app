@@ -4,18 +4,16 @@ type Inputs = {
     id: number;
     name: string;
     price: number;
-  }
+}
 
 
 export const UpdateProductForm = ({ updateProduct, product }: { updateProduct: (data: Inputs) => void, product: Inputs }) => {
-
-    const { id, name, price } = product
-  
+      
     const {
       register,
       handleSubmit,
       formState: { errors },
-    } = useForm<Inputs>({defaultValues: {id: id, name: name, price: price}})
+    } = useForm<Inputs>({defaultValues: {...product}})
   
     const onSubmit: SubmitHandler<Inputs> = (data) => updateProduct({ ...data,  })
   
