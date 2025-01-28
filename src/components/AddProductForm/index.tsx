@@ -6,11 +6,11 @@ type Inputs = {
   price: number;
 };
 
-export const AddProductForm = ({
-  addProduct,
-}: {
+type AddProductFormProps = {
   addProduct: (data: Inputs) => void;
-}) => {
+}
+
+export const AddProductForm = ({ addProduct }: AddProductFormProps) => {
   const {
     register,
     handleSubmit,
