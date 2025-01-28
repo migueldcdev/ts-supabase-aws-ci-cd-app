@@ -1,4 +1,4 @@
-import "./index.css"
+import "./index.css";
 
 import { AppContext } from "./context";
 
@@ -10,6 +10,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <AppContext>
       <App />
-    </AppContext>    
-  </React.StrictMode>
+    </AppContext>
+  </React.StrictMode>,
 );

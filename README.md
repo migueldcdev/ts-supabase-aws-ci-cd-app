@@ -103,4 +103,3 @@ Run `npm test` to execute unit and integration tests.
 - This project is designed for **scalability and maintainability**, making it easy to expand.
 - The use of **Supabase, Tailwind, and AWS** ensures a modern and efficient development workflow.
 - The entire application is containerized for **portability and easy deployment**.
-

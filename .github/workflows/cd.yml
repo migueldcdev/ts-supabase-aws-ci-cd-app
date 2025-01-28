@@ -15,7 +15,7 @@ jobs:
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-      AWS_REGION: "us-east-1"  # ✅ Update this to your AWS region
+      AWS_REGION: "us-east-1" # ✅ Update this to your AWS region
       AWS_ECR_REPO: "${{ secrets.AWS_ECR_URL }}/vite-react-app-with-supabase-aws"
       ECS_CLUSTER: "my-cluster"
       ECS_SERVICE: "my-service"
@@ -34,7 +34,7 @@ jobs:
 
       # 📦 3. Install Dependencies
       - name: 📦 Install Dependencies
-        run: npm ci  # ✅ Faster & ensures a clean dependency tree
+        run: npm ci # ✅ Faster & ensures a clean dependency tree
 
       # 🔧 4. Build the App
       - name: 🔧 Build Application

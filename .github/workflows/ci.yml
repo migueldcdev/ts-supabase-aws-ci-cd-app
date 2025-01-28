@@ -15,11 +15,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: "npm"  # ✅ Caches dependencies for faster builds
+          cache: "npm" # ✅ Caches dependencies for faster builds
 
       # 📦 3. Install Dependencies
       - name: 📦 Install Dependencies
-        run: npm ci  # ✅ Faster & ensures a clean dependency tree
+        run: npm ci # ✅ Faster & ensures a clean dependency tree
 
       # 📝 4. Run Linter
       - name: 📝 Run Linter
@@ -28,7 +28,7 @@ jobs:
   test:
     name: 🧪 Run Tests
     runs-on: ubuntu-latest
-    needs: lint  # ✅ Runs only if linting succeeds
+    needs: lint # ✅ Runs only if linting succeeds
     env:
       VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
       VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
