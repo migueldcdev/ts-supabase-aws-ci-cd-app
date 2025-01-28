@@ -1,6 +1,6 @@
-import { Login } from ".";
+//import { Login } from ".";
 import { expect, test, describe } from "vitest";
-import {render, screen} from "../../utils/test"
+//import {render, screen} from "../../utils/test"
 
 describe("Login component test suite", () => {
   test("should render", () => {
