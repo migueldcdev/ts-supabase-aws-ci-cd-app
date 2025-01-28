@@ -62,16 +62,16 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
   async function updateProduct(product: Product) {
      
     const { id, name, price }  = product
-
+    
     const { error } = await supabase.from("products").update({ name, price }).eq("id", id);
+
     if (error) {
       console.error(error);
       alert("Error updating product: " + error.message);
     } else {
-      //setProducts();      
+      setProducts(products.map(item => (item.id === id ? {...product} : item)));     
     }
   };
-
 
   useEffect(() => {
     fetchSession();
