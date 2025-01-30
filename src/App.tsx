@@ -10,6 +10,8 @@ import { ProductList } from "./components/ProductList";
 
 import { useAppContext } from "./context";
 
+import { FaSignOutAlt } from "react-icons/fa";
+
 const App = () => {
   const { session, handleLogout } = useAppContext();
 
@@ -23,14 +25,14 @@ const App = () => {
 
   return (
     <Router>
-      <nav className="w-full bg-blue-800 text-white p-4 flex justify-between items-center shadow-md">
-        <h1 className="text-xl font-bold">My Products App</h1>
+      <nav className="w-full bg-slate-300 p-4 flex justify-between items-center shadow-md">
+        <h1 className="text-xl font-bold text-slate-600">My Products App</h1>
         {session && (
           <button
             onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md"
+            className="bg-slate-500 px-2 py-2 text-white rounded-md hover:cursor-pointer hover:bg-slate-600"
           >
-            Logout
+            <FaSignOutAlt />
           </button>
         )}
       </nav>
