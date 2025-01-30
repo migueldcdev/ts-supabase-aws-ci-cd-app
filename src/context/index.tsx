@@ -95,8 +95,8 @@ export const AppContext = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    if (session) fetchProducts();
+  }, [session]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
